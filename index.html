@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcher I&K bist du? · Rundgang HS Flensburg</title>
+<meta name="description" content="6 Fragen, 60 Sekunden, dein Studiengang am Fachbereich Information & Kommunikation der Hochschule Flensburg.">
+<meta name="theme-color" content="#142850">
+<!-- Open Graph (für Sharing in WhatsApp, Telegram, etc.) -->
+<meta property="og:title" content="Welcher I&K bist du?">
+<meta property="og:description" content="6 Fragen, 60 Sekunden, dein Studiengang am FB Information & Kommunikation.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Welcher I&K bist du?">
+<meta name="twitter:description" content="6 Fragen, 60 Sekunden, dein Studiengang am FB I&K der HS Flensburg.">
+<!-- Schriftarten -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design-Tokens ===== */
+  :root {
+    --navy: #142850;
+    --navy-dark: #0a1838;
+    --lavender: #C4B5FD;
+    --lavender-dark: #5343B0;
+    --coral: #E8845F;
+    --coral-dark: #993C1D;
+    --teal: #0F6E56;
+    --teal-light: #9FE1CB;
+    --cream: #F4F1EB;
+    --white: #FFFFFF;
+    --text: #1A1A1A;
+    --muted: #6B6B6B;
+    --border: rgba(20, 40, 80, 0.12);
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --transition: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ===== Reset & Base ===== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    min-height: 100dvh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; }
+  a { color: inherit; }
+
+  main {
+    max-width: 540px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px 32px;
+  }
+
+  /* ===== Screens ===== */
+  .screen { display: none; flex-direction: column; flex: 1; animation: fadeIn 450ms ease-out; }
+  .screen.active { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Brand-Header ===== */
+  .brand {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ===== Welcome-Screen ===== */
+  .welcome-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+  }
+  .welcome-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 9vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.02;
+    color: var(--navy);
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .welcome-title em {
+    font-style: italic;
+    color: var(--lavender-dark);
+  }
+  .welcome-subtitle {
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0 0 40px;
+    max-width: 360px;
+    line-height: 1.5;
+  }
+
+  /* ===== Buttons ===== */
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px 28px;
+    border-radius: 999px;
+    transition: transform var(--transition), background var(--transition);
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible {
+    background: var(--navy-dark);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 20px;
+    border: 1.5px solid var(--navy);
+    border-radius: 999px;
+    transition: background var(--transition), color var(--transition);
+  }
+  .btn-secondary:hover, .btn-secondary:focus-visible {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: auto;
+    padding-top: 24px;
+  }
+
+  /* ===== Quiz-Screen ===== */
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .progress-text {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 56px;
+    font-weight: 500;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--navy);
+    border-radius: 999px;
+    transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .question {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5.5vw, 1.875rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--navy);
+    margin: 0 0 28px;
+  }
+
+  .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .answer {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--text);
+    transition: border-color 200ms ease, transform 200ms ease;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .answer:hover, .answer:focus-visible {
+    border-color: var(--navy);
+    transform: translateX(2px);
+  }
+  .answer .letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--cream);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .answer:hover .letter, .answer:focus-visible .letter {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .answer .answer-text { flex: 1; }
+
+  /* ===== Result-Screen ===== */
+  .result-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+  }
+  .result-eyebrow {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--muted);
+    margin: 0 0 4px;
+  }
+  .result-name {
+    font-family: var(--font-serif);
+    font-size: clamp(2.25rem, 7.5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.05;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .result-degree {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  .result-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 28px;
+    white-space: pre-line;
+  }
+  .result-cta { margin-bottom: 16px; }
+  .result-master {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 16px 18px;
+    background: var(--white);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+  .result-master a {
+    color: var(--navy);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ===== Farb-Varianten pro Studiengang ===== */
+  .studiengang-AI .result-name { color: var(--navy); }
+  .studiengang-AI .result-degree { background: var(--navy); color: var(--white); }
+  .studiengang-MI .result-name { color: var(--lavender-dark); }
+  .studiengang-MI .result-degree { background: var(--lavender); color: #3C3489; }
+  .studiengang-FMA .result-name { color: var(--coral-dark); }
+  .studiengang-FMA .result-degree { background: var(--coral); color: #4A1B0C; }
+  .studiengang-IFK .result-name { color: var(--teal); }
+  .studiengang-IFK .result-degree { background: var(--teal-light); color: #04342C; }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== Accessibility ===== */
+  :focus-visible {
+    outline: 2px solid var(--navy);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <!-- ====== 1. BEGRÜSSUNGSBILDSCHIRM ====== -->
+  <section id="welcome" class="screen active" aria-labelledby="welcome-title">
+    <div class="brand">Rundgang · FB Information &amp; Kommunikation</div>
+    <div class="welcome-content">
+      <h1 id="welcome-title" class="welcome-title">
+        Welcher <em>I&amp;K</em><br>bist du?
+      </h1>
+      <p class="welcome-subtitle">
+        6 Fragen. 60 Sekunden. Ein Studiengang.
+      </p>
+      <button class="btn-primary" onclick="startQuiz()" aria-label="Quiz starten">
+        Los geht's →
+      </button>
+    </div>
+    <div class="footer-text">
+      Ein digitales Give-Away · Hochschule Flensburg
+    </div>
+  </section>
+
+  <!-- ====== 2. QUIZ-BILDSCHIRM ====== -->
+  <section id="quiz" class="screen" aria-live="polite">
+    <div class="brand">Rundgang · FB I&amp;K</div>
+    <div class="progress">
+      <span class="progress-text" id="progress-text">1 / 6</span>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+    <h2 class="question" id="question-text">Frage wird geladen…</h2>
+    <div class="answers" id="answers"></div>
+    <div class="footer-text">Ein digitales Give-Away · Hochschule Flensburg</div>
+  </section>
+
+  <!-- ====== 3. ERGEBNIS-BILDSCHIRM ====== -->
+  <section id="result" class="screen" aria-labelledby="result-name">
+    <div class="brand">Rundgang · FB I&amp;K · Dein Ergebnis</div>
+    <div class="result-content" id="result-content"></div>
+  </section>
+
+</main>
+
+<script>
+// =====================================================
+// QUIZ-INHALT
+// Hinweis: Alle Texte zentral hier, einfach anpassbar.
+// Wenn du Fragen oder Ergebnisse ändern willst, ändere
+// einfach die Strings unten — kein anderer Code muss
+// angefasst werden.
+// =====================================================
+
+const questions = [
+  {
+    text: "Du hast einen kompletten Sonntag frei. Womit verbringst du ihn am liebsten?",
+    answers: [
+      { text: "Eine neue Programmiersprache ausprobieren oder ein Tech-Problem knacken", studiengang: "AI" },
+      { text: "Ein Game zocken und dabei überlegen, wie es gebaut wurde", studiengang: "MI" },
+      { text: "Filme schauen oder selbst etwas filmen und schneiden", studiengang: "FMA" },
+      { text: "Eine Serie im Originalton schauen – Untertitel optional", studiengang: "IFK" }
+    ]
+  },
+  {
+    text: "Welcher Satz beschreibt dich am besten?",
+    answers: [
+      { text: "„Wenn etwas nicht funktioniert, will ich wissen, WARUM.\u201C", studiengang: "AI" },
+      { text: "„Schön UND nützlich – beides oder gar nicht.\u201C", studiengang: "MI" },
+      { text: "„Mir passieren Bilder im Kopf, bevor ich Worte finde.\u201C", studiengang: "FMA" },
+      { text: "„Ich denke automatisch in mehreren Sprachen.\u201C", studiengang: "IFK" }
+    ]
+  },
+  {
+    text: "Welches Tool reizt dich am meisten?",
+    answers: [
+      { text: "VS Code mit Terminal daneben", studiengang: "AI" },
+      { text: "Figma und ein bisschen Code", studiengang: "MI" },
+      { text: "DaVinci Resolve oder Premiere Pro", studiengang: "FMA" },
+      { text: "DeepL, SDL Trados, OmegaT", studiengang: "IFK" }
+    ]
+  },
+  {
+    text: "Was nervt dich am meisten an einer schlechten Website?",
+    answers: [
+      { text: "Wenn sie buggy oder lahm ist", studiengang: "AI" },
+      { text: "Wenn die Bedienung unintuitiv ist", studiengang: "MI" },
+      { text: "Wenn das Bildmaterial billig wirkt", studiengang: "FMA" },
+      { text: "Wenn die englische Version klingt wie Google Translate von 2012", studiengang: "IFK" }
+    ]
+  },
+  {
+    text: "Welcher Job klingt für dich nach Traum – oder zumindest: nicht falsch?",
+    answers: [
+      { text: "Software-Engineer bei einem Tech-Startup", studiengang: "AI" },
+      { text: "UX/UI Designer:in mit Frontend-Skills", studiengang: "MI" },
+      { text: "Filmregisseur:in oder Editor:in", studiengang: "FMA" },
+      { text: "Technische:r Redakteur:in oder Lokalisierungs-Manager:in", studiengang: "IFK" }
+    ]
+  },
+  {
+    text: "Du sollst eine App für eine Hochschule entwerfen. Wo fängst du an?",
+    answers: [
+      { text: "Bei der API-Struktur und dem Datenbankschema", studiengang: "AI" },
+      { text: "Bei einem klickbaren Prototyp in Figma", studiengang: "MI" },
+      { text: "Bei einem Erklärvideo, das zeigt, WARUM die App existiert", studiengang: "FMA" },
+      { text: "Bei der Recherche, wie ähnliche Apps in anderen Ländern funktionieren", studiengang: "IFK" }
+    ]
+  }
+];
+
+// HINWEIS: Die URLs unten sind Platzhalter. Bitte vor Deployment
+// auf hs-flensburg.de prüfen und ggf. anpassen.
+const results = {
+  AI: {
+    eyebrow: "Du bist",
+    name: "Angewandte Informatik",
+    degree: "B.SC.",
+    description: "Du denkst in Systemen und suchst die Logik hinter dem Chaos. Du willst Dinge nicht nur benutzen – du willst sie bauen. Code, Datenbanken, Algorithmen: du verstehst, was unter der Oberfläche passiert, und genau das willst du gestalten.\n\nAn der HS Flensburg lernst du, Software-Lösungen für reale Probleme zu entwickeln – vom maritimen Sensor bis zur smarten App.",
+    url: "https://hs-flensburg.de/studium/studienangebot/bachelor/angewandte-informatik"
+  },
+  MI: {
+    eyebrow: "Du bist",
+    name: "Medieninformatik",
+    degree: "B.SC.",
+    description: "Du sitzt zwischen Code und Kreativität – und das ist genau dein Spot. Du baust nicht einfach Software, du baust Erlebnisse: Games, interaktive Webseiten, AR-Anwendungen. Logik ohne Ästhetik ist dir zu trocken. Design ohne Funktion zu beliebig.\n\nAn der HS Flensburg verbindet die Medieninformatik beides – du programmierst UND gestaltest.",
+    url: "https://hs-flensburg.de/studium/studienangebot/bachelor/medieninformatik"
+  },
+  FMA: {
+    eyebrow: "Du bist",
+    name: "Film & Media Arts",
+    degree: "B.A.",
+    description: "Du erzählst in Bildern und Tönen, bevor du in Worten erzählst. Kamera, Schnitt, Sound, Story – das ist deine Sprache. Du willst nicht nur Inhalte konsumieren, sondern selbst Werke schaffen, die Menschen bewegen.\n\nAn der HS Flensburg bekommst du das Werkzeug und den Raum, um deine eigenen audiovisuellen Projekte umzusetzen – vom Kurzfilm bis zur Dokumentation.",
+    url: "https://hs-flensburg.de/studium/studienangebot/bachelor/film-media-arts"
+  },
+  IFK: {
+    eyebrow: "Du bist",
+    name: "Internationale Fachkommunikation",
+    degree: "B.A.",
+    description: "Sprachen sind für dich kein Hindernis, sondern dein Werkzeug. Du kannst Komplexes verständlich machen – über Sprachen, Kulturen und Fachgebiete hinweg. Übersetzen, Lokalisieren, technisches Schreiben: du bist die Brücke zwischen denen, die wissen, und denen, die verstehen wollen.\n\nAn der HS Flensburg lernst du, professionell zwischen Welten zu kommunizieren.",
+    url: "https://hs-flensburg.de/studium/studienangebot/bachelor/internationale-fachkommunikation"
+  }
+};
+
+const masterPath = {
+  text: "Lust auf einen Master?",
+  name: "M.A. Design, Film & Marketing",
+  url: "https://hs-flensburg.de/studium/studienangebot/master/design-film-marketing"
+};
+
+// =====================================================
+// QUIZ-LOGIK
+// =====================================================
+
+let currentQuestion = 0;
+let scores = { AI: 0, MI: 0, FMA: 0, IFK: 0 };
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function startQuiz() {
+  currentQuestion = 0;
+  scores = { AI: 0, MI: 0, FMA: 0, IFK: 0 };
+  // Result-Klassen zurücksetzen
+  document.getElementById('result').className = 'screen';
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  const total = questions.length;
+
+  document.getElementById('progress-text').textContent = (currentQuestion + 1) + ' / ' + total;
+  document.getElementById('progress-fill').style.width = (((currentQuestion + 1) / total) * 100) + '%';
+  document.getElementById('question-text').textContent = q.text;
+
+  const answersEl = document.getElementById('answers');
+  answersEl.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.answers.forEach((answer, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer';
+    btn.setAttribute('aria-label', 'Antwort ' + letters[i] + ': ' + answer.text);
+
+    const letterEl = document.createElement('span');
+    letterEl.className = 'letter';
+    letterEl.textContent = letters[i];
+    letterEl.setAttribute('aria-hidden', 'true');
+
+    const textEl = document.createElement('span');
+    textEl.className = 'answer-text';
+    textEl.textContent = answer.text;
+
+    btn.appendChild(letterEl);
+    btn.appendChild(textEl);
+    btn.onclick = function() { selectAnswer(answer.studiengang); };
+    answersEl.appendChild(btn);
+  });
+}
+
+function selectAnswer(studiengang) {
+  scores[studiengang]++;
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  // Höchste Punktzahl ermitteln
+  // Bei Gleichstand gewinnt die erste in der Reihenfolge: AI, MI, FMA, IFK
+  let winner = 'AI';
+  let max = -1;
+  ['AI', 'MI', 'FMA', 'IFK'].forEach(function(sg) {
+    if (scores[sg] > max) {
+      max = scores[sg];
+      winner = sg;
+    }
+  });
+
+  const r = results[winner];
+  const resultSection = document.getElementById('result');
+  resultSection.className = 'screen studiengang-' + winner;
+
+  document.getElementById('result-content').innerHTML =
+    '<p class="result-eyebrow">' + r.eyebrow + '</p>' +
+    '<h1 class="result-name" id="result-name">' + r.name + '</h1>' +
+    '<span class="result-degree">' + r.degree + '</span>' +
+    '<p class="result-description">' + r.description + '</p>' +
+    '<a class="btn-primary result-cta" href="' + r.url + '" target="_blank" rel="noopener">Mehr erfahren →</a>' +
+    '<div class="result-master">' +
+      masterPath.text + ' Schau dir den <a href="' + masterPath.url + '" target="_blank" rel="noopener">' + masterPath.name + '</a> an.' +
+    '</div>' +
+    '<div class="actions">' +
+      '<button class="btn-secondary" onclick="shareResult()" aria-label="Ergebnis teilen">Ergebnis teilen</button>' +
+      '<button class="btn-secondary" onclick="startQuiz()" aria-label="Quiz neu starten">Quiz neu starten</button>' +
+    '</div>';
+
+  showScreen('result');
+  resultSection.className = 'screen active studiengang-' + winner;
+}
+
+async function shareResult() {
+  const winner = document.getElementById('result').className.match(/studiengang-(\w+)/)[1];
+  const r = results[winner];
+  const shareData = {
+    title: 'Welcher I&K bist du?',
+    text: 'Ich bin ' + r.name + ' (' + r.degree + ')! Welcher I&K-Studiengang bist du? Mach das Quiz:',
+    url: window.location.href
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else if (navigator.clipboard) {
+      await navigator.clipboard.writeText(shareData.text + ' ' + shareData.url);
+      alert('Link in die Zwischenablage kopiert!');
+    } else {
+      alert('Teilen wird auf diesem Gerät nicht unterstützt.');
+    }
+  } catch (err) {
+    // Nutzer hat abgebrochen oder Fehler — kein Feedback nötig
+  }
+}
+</script>
+</body>
+</html>
